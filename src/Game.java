@@ -55,14 +55,9 @@ public class Game {
         System.out.print("| ");
         for (int i = 0; i < 9; i++) {
             switch (board.get_field(i)) {
-                case 0:
-                    System.out.print("  | ");
-                    break;
-                case Player.SIGN:
-                    System.out.print("X | ");
-                    break;
-                default:
-                    System.out.print("O | ");
+                case 0 -> System.out.print("  | ");
+                case Player.SIGN -> System.out.print("X | ");
+                default -> System.out.print("O | ");
             }
             if ((i > 0) && ((i + 1) % 3 == 0)) {
                 System.out.println();
@@ -83,38 +78,33 @@ public class Game {
                 System.out.println("Remis!");
                 break;
             }
-            if (determine_winner() > 0) {
+            int winner = determine_winner();
+            if (winner > 0) {
                 print_board();
-                switch (determine_winner()) {
-                    case Player.SIGN:
-                        System.out.println("You have won!");
-                        break;
-                    case AI.SIGN:
-                        System.out.println("You have lost^");
-                        break;
+                switch (winner) {
+                    case Player.SIGN -> System.out.println("You have won!");
+                    case AI.SIGN -> System.out.println("You have lost!");
                 }
                 break;
-
             }
             int player_choice = player.choose_field();
-            if (board.get_field(player_choice) == Player.SIGN) {
-                System.err.println("You have already taken this field!");
-                continue;
-            } else if (board.get_field(player_choice) == AI.SIGN) {
-                System.err.println("Your opponent has already taken this field!");
-                continue;
-            } else {
-                board.set_field(player_choice, Player.SIGN);
+            switch (board.get_field(player_choice)) {
+                case Player.SIGN -> {
+                    System.err.println("You have already taken this field!");
+                    continue;
+                }
+                case AI.SIGN -> {
+                    System.err.println("Your opponent has already taken this field!");
+                    continue;
+                }
+                default -> board.set_field(player_choice, Player.SIGN);
             }
-            if (determine_winner() > 0) {
+            int winner_after_player_move = determine_winner();
+            if (winner_after_player_move > 0) {
                 print_board();
-                switch (determine_winner()) {
-                    case Player.SIGN:
-                        System.out.println("You have won!");
-                        break;
-                    case AI.SIGN:
-                        System.out.println("You have lost^");
-                        break;
+                switch (winner_after_player_move) {
+                    case Player.SIGN -> System.out.println("You have won!");
+                    case AI.SIGN -> System.out.println("You have lost^");
                 }
                 break;
 
@@ -123,20 +113,7 @@ public class Game {
                 System.out.println("Remis!");
                 break;
             }
-            if (determine_winner() > 0) {
-                print_board();
-                switch (determine_winner()) {
-                    case Player.SIGN:
-                        System.out.println("You have won!");
-                        break;
-                    case AI.SIGN:
-                        System.out.println("You have lost ^^");
-                        break;
-                }
-                break;
-            }
             ai.ai_move(board);
-
         }
     }
 }
