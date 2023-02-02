@@ -3,11 +3,11 @@ import java.util.Arrays;
 public class Board {
     public static final int WIDTH = 3;
     public static final int LENGTH = 3;
-    private int[] field_placement = new int[9];
+    private final int[] field_placement = new int[9];
     public Board() {
         Arrays.fill(field_placement, 0);
     }
-    public void set_field(int field_number, int player_number) {
+    public void set_field(int field_number, int player_number) throws AssertionError {
         if (9 < field_number || field_number < 0){
             throw new AssertionError();
         }
