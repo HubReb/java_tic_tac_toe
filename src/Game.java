@@ -81,16 +81,7 @@ public class Game {
             int winner = determine_winner();
             if (winner > 0) {
                 print_board();
-                switch (winner) {
-                    case Player.SIGN -> {
-                        System.out.println("You have won!");
-                        return 1;
-                    }
-                    case AI.SIGN -> {
-                        System.out.println("You have lost!");
-                        return 2;
-                    }
-                }
+                return determine_final_state(winner);
             }
             int player_choice = player.choose_field();
             switch (board.get_field(player_choice)) {
@@ -106,19 +97,7 @@ public class Game {
             }
             int winner_after_player_move = determine_winner();
             if (winner_after_player_move > 0) {
-                print_board();
-                switch (winner_after_player_move) {
-                    case Player.SIGN -> {
-                        System.out.println("You have won!");
-                        return 1;
-                    }
-                    case AI.SIGN -> {
-                        System.out.println("You have lost!");
-                        return 2;
-                    }
-                }
-                break;
-
+                return determine_final_state(winner_after_player_move);
             }
             if (determine_remis()) {
                 System.out.println("Remis!");
@@ -126,6 +105,15 @@ public class Game {
             }
             ai.ai_move(board);
         }
-        return 3;
+    }
+
+    private int determine_final_state(int winner_after_player_move) {
+        print_board();
+        if (winner_after_player_move == Player.SIGN) {
+            System.out.println("You have won!");
+            return 1;
+        }
+        System.out.println("You have lost!");
+        return 2;
     }
 }
