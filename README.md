@@ -6,7 +6,7 @@ Currently only playable on the command line, but the addition of a GUI is planne
 
 Current features: 
 * different difficulties
+* score keeper
 
 Planned features:
-* score keeper
 * GUI
