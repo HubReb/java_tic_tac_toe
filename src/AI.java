@@ -16,7 +16,7 @@ public class AI {
         return false;
     }
     public void ai_move(Board board) {
-        if ((difficulty == 0) || ThreadLocalRandom.current().nextInt(1, difficulty + 1) == 1) {
+        if ((difficulty == 1) || ThreadLocalRandom.current().nextInt(0, difficulty + 1) == 1) {
             boolean done = random_move(board);
             while (!done) {
                 done = random_move(board);
