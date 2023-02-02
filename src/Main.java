@@ -43,7 +43,7 @@ public class Main {
             );
             out.println(score_message);
             while (!readable_int) {
-                out.print("Start a new game?\n1) Yes\n2) No\n Your choice: ");
+                out.print("Start a new game?\n1) Yes\n2) No\nYour choice: ");
                 if (scanner.hasNextInt()) {
                     int read_number = scanner.nextInt();
                     if (read_number < 1 || read_number > 2) {
