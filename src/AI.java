@@ -16,7 +16,7 @@ public class AI {
         return false;
     }
     public void ai_move(Board board) {
-        if ((difficulty == 0) || ThreadLocalRandom.current().nextInt(1, 4) == 3) {
+        if ((difficulty == 0) || ThreadLocalRandom.current().nextInt(1, difficulty + 1) == 1) {
             boolean done = random_move(board);
             while (!done) {
                 done = random_move(board);
@@ -96,14 +96,13 @@ public class AI {
     }
     private int check_diagonals(Board board) {
         int[][] diagonal_indices = {{2,4,6},{0,4,8}};
-        for (int i=0; i < diagonal_indices.length; i++) {
+        for (int[] diagonalIndex : diagonal_indices) {
             int free_cell = 0;
             int diagonal_count = 0;
-            for (int j=0; j<diagonal_indices[i].length; j++){
+            for (int j = 0; j < diagonalIndex.length; j++) {
                 if (board.get_field(j) == 0) {
                     free_cell = j;
-                }
-                else {
+                } else {
                     diagonal_count++;
                 }
             }
