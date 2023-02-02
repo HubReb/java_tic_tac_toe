@@ -1,3 +1,4 @@
+import java.text.MessageFormat;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -8,6 +9,9 @@ public class Main {
         Scanner scanner = new Scanner(in);
         boolean readable_int = false;
         int difficulty = 0;
+        int losses = 0;
+        int victories = 0;
+        int remis = 0;
         while (!readable_int) {
             out.print("Choose a difficulty: \n1) easy\n2) medium\n3) difficult\nYour choice: ");
             if (scanner.hasNextInt()) {
@@ -24,7 +28,37 @@ public class Main {
                 scanner.nextLine();
             }
         }
-        Game tic_tac_toe = new Game(difficulty);
-        tic_tac_toe.game_loop();
+        boolean play = true;
+        while (play) {
+            readable_int = false;
+            Game tic_tac_toe = new Game(difficulty);
+            int game_result = tic_tac_toe.game_loop();
+            switch (game_result) {
+                case 1 -> victories++;
+                case 2 -> losses++;
+                case 3 -> remis++;
+            }
+            String score_message = MessageFormat.format(
+                    "Your current score:\nLosses: {0}\nVictories: {1}\nRemis: {2}", losses, victories, remis
+            );
+            out.println(score_message);
+            while (!readable_int) {
+                out.print("Start a new game?\n1) Yes\n2) No\n Your choice: ");
+                if (scanner.hasNextInt()) {
+                    int read_number = scanner.nextInt();
+                    if (read_number < 1 || read_number > 2) {
+                        out.println("Please enter a valid number.");
+                        continue;
+                    }
+                    if (read_number == 2) {
+                        play = false;
+                    }
+                    readable_int = true;
+                } else {
+                    out.println("Please enter a valid number.");
+                    scanner.nextLine();
+                }
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@ import java.awt.desktop.SystemEventListener;
 public class Game {
     public Board board;
     public Player player;
-    private AI ai;
+    private final AI ai;
 
     public Game(int difficulty) {
         this.board = new Board();
@@ -71,21 +71,26 @@ public class Game {
         System.out.println("-------------");
     }
 
-    public void game_loop() {
+    public int game_loop() {
         while (true) {
             print_board();
             if (determine_remis()) {
                 System.out.println("Remis!");
-                break;
+                return 3;
             }
             int winner = determine_winner();
             if (winner > 0) {
                 print_board();
                 switch (winner) {
-                    case Player.SIGN -> System.out.println("You have won!");
-                    case AI.SIGN -> System.out.println("You have lost!");
+                    case Player.SIGN -> {
+                        System.out.println("You have won!");
+                        return 1;
+                    }
+                    case AI.SIGN -> {
+                        System.out.println("You have lost!");
+                        return 2;
+                    }
                 }
-                break;
             }
             int player_choice = player.choose_field();
             switch (board.get_field(player_choice)) {
@@ -103,17 +108,24 @@ public class Game {
             if (winner_after_player_move > 0) {
                 print_board();
                 switch (winner_after_player_move) {
-                    case Player.SIGN -> System.out.println("You have won!");
-                    case AI.SIGN -> System.out.println("You have lost^");
+                    case Player.SIGN -> {
+                        System.out.println("You have won!");
+                        return 1;
+                    }
+                    case AI.SIGN -> {
+                        System.out.println("You have lost!");
+                        return 2;
+                    }
                 }
                 break;
 
             }
             if (determine_remis()) {
                 System.out.println("Remis!");
-                break;
+                return 3;
             }
             ai.ai_move(board);
         }
+        return 3;
     }
 }
