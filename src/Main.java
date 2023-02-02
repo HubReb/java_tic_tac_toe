@@ -34,9 +34,9 @@ public class Main {
             Game tic_tac_toe = new Game(difficulty);
             int game_result = tic_tac_toe.game_loop();
             switch (game_result) {
-                case 1 -> victories++;
-                case 2 -> losses++;
-                case 3 -> remis++;
+                case Player.SIGN -> victories++;
+                case AI.SIGN -> losses++;
+                default -> remis++;
             }
             String score_message = MessageFormat.format(
                     "Your current score:\nLosses: {0}\nVictories: {1}\nRemis: {2}", losses, victories, remis
