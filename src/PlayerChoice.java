@@ -1,6 +1,6 @@
 public class PlayerChoice<U, V> {
-    private U player_sign;
-    private V player_field_choice;
+    private final U player_sign;
+    private final V player_field_choice;
 
     public PlayerChoice(U sign, V field_number){
         player_sign = sign;
