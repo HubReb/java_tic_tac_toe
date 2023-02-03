@@ -1,4 +1,7 @@
 import java.awt.desktop.SystemEventListener;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Game {
     public Board board;
     public Player player;
@@ -28,17 +31,22 @@ public class Game {
         }
         return true;
     }
-    private int determine_winner() {
+    private int determine_winner(int chosen_field) {
         int[] row_start = {0, 3, 6};
         for (int i : row_start) {
-            if (check_three(i, 1)) {
-                return board.get_field(i);
+            if (chosen_field >= i && chosen_field <= (i+3)) {
+                if (check_three(i, 1)) {
+                    return board.get_field(i);
+                }
             }
         }
         int[] column_start = {0, 1, 2};
         for (int i : column_start) {
-            if (check_three(i, 3)) {
-                return board.get_field(i);
+            int[] column_numbers = {i, i+3, i+6};
+            if (Arrays.stream(column_numbers).filter(j -> j == chosen_field).count() == 1) {
+                if (check_three(i, 3)) {
+                    return board.get_field(i);
+                }
             }
         }
         // check diagonals
@@ -74,15 +82,7 @@ public class Game {
     public int game_loop() {
         while (true) {
             print_board();
-            if (determine_remis()) {
-                System.out.println("Remis!");
-                return 3;
-            }
-            int winner = determine_winner();
-            if (winner > 0) {
-                print_board();
-                return determine_final_state(winner);
-            }
+
             int player_choice = player.choose_field();
             switch (board.get_field(player_choice)) {
                 case Player.SIGN -> {
@@ -93,17 +93,28 @@ public class Game {
                     System.err.println("Your opponent has already taken this field!");
                     continue;
                 }
-                default -> board.set_field(player_choice, Player.SIGN);
-            }
-            int winner_after_player_move = determine_winner();
-            if (winner_after_player_move > 0) {
-                return determine_final_state(winner_after_player_move);
+                default -> {
+                    board.set_field(player_choice, Player.SIGN);
+                    int winner_after_player_move = determine_winner(player_choice);
+                    if (winner_after_player_move > 0) {
+                        return determine_final_state(winner_after_player_move);
+                    }
+                }
             }
             if (determine_remis()) {
                 System.out.println("Remis!");
                 return 3;
             }
-            ai.ai_move(board);
+            int marked_field = ai.ai_move(board);
+            if (determine_remis()) {
+                System.out.println("Remis!");
+                return 3;
+            }
+            int winner = determine_winner(marked_field);
+            if (winner > 0) {
+                print_board();
+                return determine_final_state(winner);
+            }
         }
     }
 
