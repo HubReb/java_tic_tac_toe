@@ -7,41 +7,42 @@ public class AI {
         difficulty = chosen_difficulty;
     }
 
-    private boolean random_move(Board board) {
+    private int random_move(Board board) {
         int random_field = ThreadLocalRandom.current().nextInt(9);
         if (board.get_field(random_field) == 0) {
             board.set_field(random_field, SIGN);
-            return true;
+            return random_field;
         }
-        return false;
+        return -1;
     }
-    public void ai_move(Board board) {
-        if ((difficulty == 1) || ThreadLocalRandom.current().nextInt(0, difficulty + 1) == 1) {
-            boolean done = random_move(board);
-            while (!done) {
-                done = random_move(board);
+    public int ai_move(Board board) {
+        if ((difficulty == 1) || ThreadLocalRandom.current().nextInt(0, difficulty * 3) == 1) {
+            int chosen_field = random_move(board);
+            while (chosen_field < 0) {
+                chosen_field = random_move(board);
             }
-            return;
+            return chosen_field;
         }
         if (board.get_field(4) == 0) {
             board.set_field(4, SIGN);
+            return 4;
         }
         else {
             int two_in_row = check_two(board, false);
             if (two_in_row > -1) {
                 board.set_field(two_in_row, SIGN);
-                return;
+                return two_in_row;
             }
             int two_in_columns = check_two(board, true);
             if (two_in_columns > -1){
                 board.set_field(two_in_columns, SIGN);
-                return;
+                return two_in_columns;
 
             }
             int two_in_diagonals = check_diagonals(board);
             if (two_in_diagonals > -1) {
                 board.set_field(two_in_diagonals, SIGN);
-                return;
+                return two_in_diagonals;
             }
             int empty_spot = -1;
             for (int i = 0; i < 9; i++){
@@ -50,7 +51,7 @@ public class AI {
                     int next_field_to_take = get_available_adjacent(board, i);
                     if (next_field_to_take > -1) {
                         board.set_field(next_field_to_take, SIGN);
-                        return;
+                        return next_field_to_take;
                     }
                 }
                 else if (board.get_field(i) == 0) {
@@ -59,8 +60,8 @@ public class AI {
                 }
             }
             board.set_field(empty_spot, SIGN);
+            return empty_spot;
         }
-
     }
 
     private int get_available_adjacent(Board board, int field) {
@@ -99,7 +100,7 @@ public class AI {
         for (int[] diagonalIndex : diagonal_indices) {
             int free_cell = 0;
             int diagonal_count = 0;
-            for (int j = 0; j < diagonalIndex.length; j++) {
+            for (int j : diagonalIndex) {
                 if (board.get_field(j) == 0) {
                     free_cell = j;
                 } else {
@@ -120,7 +121,7 @@ public class AI {
                 int index = column ? i + 3 * j : j + 3 * i;
                 if (board.get_field(index) == 0) {
                     free_cell_index = index;
-                } else {
+                } else if (board.get_field(index) == Player.SIGN){
                     count++;
                 }
             }
