@@ -88,16 +88,21 @@ public class Game {
             int player_choice = player.choose_field_gui();
             switch (board.get_field(player_choice)) {
                 case Player.SIGN -> {
-                    System.err.println("You have already taken this field!");
+                    GameOver message = new GameOver("You have already taken this field!");
+                    message.pack();
+                    message.setVisible(true);
+                    //System.err.println("You have already taken this field!");
                     continue;
                 }
                 case AI.SIGN -> {
-                    System.err.println("Your opponent has already taken this field!");
+                    GameOver message = new GameOver("Your opponent has already taken this field!");
+                    message.pack();
+                    message.setVisible(true);
                     continue;
                 }
                 default -> {
                     board.set_field(player_choice, Player.SIGN);
-                    System.out.println(player_choice);
+                    //System.out.println(player_choice);
                     graphicalInterface.setPlayerSign(player_choice);
                     int winner_after_player_move = determine_winner(player_choice);
                     if (winner_after_player_move > 0) {
@@ -106,18 +111,18 @@ public class Game {
                 }
             }
             if (determine_remis()) {
-                System.out.println("Remis!");
+                //System.out.println("Remis!");
                 return REMIS;
             }
             int marked_field = ai.ai_move(board);
             graphicalInterface.setAISign(marked_field);
             if (determine_remis()) {
-                System.out.println("Remis!");
+              //  System.out.println("Remis!");
                 return REMIS;
             }
             int winner = determine_winner(marked_field);
             if (winner > 0) {
-                print_board();
+               // print_board();
                 return determine_final_state(winner);
             }
         }
@@ -126,10 +131,10 @@ public class Game {
     private int determine_final_state(int winner_after_player_move) {
         print_board();
         if (winner_after_player_move == Player.SIGN) {
-            System.out.println("You have won!");
+            //System.out.println("You have won!");
             return Player.SIGN;
         }
-        System.out.println("You have lost!");
+        //System.out.println("You have lost!");
         return AI.SIGN;
     }
 

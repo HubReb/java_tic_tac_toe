@@ -11,7 +11,7 @@ public class Difficulty extends JDialog {
     private JTextArea pleaseChooseADifficutlyTextArea;
     private JButton buttonHard;
 
-    private int difficulty_level;
+    private int difficultyLevel;
     private PropertyChangeSupport support;
 
     public Difficulty() {
@@ -40,22 +40,22 @@ public class Difficulty extends JDialog {
 
     private void onEasy() {
         // add your code here
-        support.firePropertyChange("difficulty_level", difficulty_level, 1);
-        difficulty_level = 1;
+        support.firePropertyChange("difficultyLevel", difficultyLevel, 1);
+        difficultyLevel = 1;
         dispose();
     }
 
     private void onMedium() {
         // add your code here
-        support.firePropertyChange("difficulty_level", difficulty_level, 2);
-        difficulty_level = 2;
+        support.firePropertyChange("difficultyLevel", difficultyLevel, 2);
+        difficultyLevel = 2;
         dispose();
     }
 
     private void onHard() {
         // add your code here
-        support.firePropertyChange("difficulty_level", difficulty_level, 3);
-        difficulty_level = 3;
+        support.firePropertyChange("difficultyLevel", difficultyLevel, 3);
+        difficultyLevel = 3;
         dispose();
     }
 
