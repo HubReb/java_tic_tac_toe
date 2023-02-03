@@ -4,11 +4,12 @@ public class Game {
     private final Board board;
     private final Player player;
     private final AI ai;
+    private final int REMIS = 3;
 
     public Game(int difficulty) {
-        this.board = new Board();
-        this.player = new Player();
-        this.ai = new AI(difficulty);
+        board = new Board();
+        player = new Player();
+        ai = new AI(difficulty);
     }
 
     private boolean check_three(int start_index, int step_size) {
@@ -101,12 +102,12 @@ public class Game {
             }
             if (determine_remis()) {
                 System.out.println("Remis!");
-                return 3;
+                return REMIS;
             }
             int marked_field = ai.ai_move(board);
             if (determine_remis()) {
                 System.out.println("Remis!");
-                return 3;
+                return REMIS;
             }
             int winner = determine_winner(marked_field);
             if (winner > 0) {
