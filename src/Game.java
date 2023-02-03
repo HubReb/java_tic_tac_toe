@@ -1,10 +1,8 @@
-import java.awt.desktop.SystemEventListener;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Game {
-    private Board board;
-    private Player player;
+    private final Board board;
+    private final Player player;
     private final AI ai;
 
     public Game(int difficulty) {
@@ -122,9 +120,9 @@ public class Game {
         print_board();
         if (winner_after_player_move == Player.SIGN) {
             System.out.println("You have won!");
-            return 1;
+            return Player.SIGN;
         }
         System.out.println("You have lost!");
-        return 2;
+        return AI.SIGN;
     }
 }
