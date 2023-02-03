@@ -5,10 +5,12 @@ public class Game {
     private final Player player;
     private final AI ai;
     private final int REMIS = 3;
-
+    private  final Gui graphicalInterface;
     public Game(int difficulty) {
         board = new Board();
+        graphicalInterface = new Gui();
         player = new Player();
+        graphicalInterface.addPropertyChangeListener(player);
         ai = new AI(difficulty);
     }
 
@@ -82,7 +84,8 @@ public class Game {
         while (true) {
             print_board();
 
-            int player_choice = player.choose_field();
+            //int player_choice = player.choose_field();
+            int player_choice = player.choose_field_gui();
             switch (board.get_field(player_choice)) {
                 case Player.SIGN -> {
                     System.err.println("You have already taken this field!");
@@ -94,6 +97,8 @@ public class Game {
                 }
                 default -> {
                     board.set_field(player_choice, Player.SIGN);
+                    System.out.println(player_choice);
+                    graphicalInterface.setPlayerSign(player_choice);
                     int winner_after_player_move = determine_winner(player_choice);
                     if (winner_after_player_move > 0) {
                         return determine_final_state(winner_after_player_move);
@@ -105,6 +110,7 @@ public class Game {
                 return REMIS;
             }
             int marked_field = ai.ai_move(board);
+            graphicalInterface.setAISign(marked_field);
             if (determine_remis()) {
                 System.out.println("Remis!");
                 return REMIS;
@@ -125,5 +131,9 @@ public class Game {
         }
         System.out.println("You have lost!");
         return AI.SIGN;
+    }
+
+    public  void close() {
+        graphicalInterface.dispose();
     }
 }

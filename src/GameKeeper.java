@@ -65,6 +65,7 @@ public class GameKeeper {
                     out.println("Please enter a valid number.");
                     scanner.nextLine();
                 }
+                tic_tac_toe.close();
             }
             readable_int = false;
         }

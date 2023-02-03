@@ -1,13 +1,29 @@
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Scanner;
 
 import static java.lang.System.*;
+import static java.lang.Thread.sleep;
 
-public class Player {
+public class Player  implements PropertyChangeListener {
     public static final int SIGN = 1;
-
+    private int userChosenField = -1;
     public Player() {
+
     }
 
+    public int choose_field_gui() {
+        while (userChosenField == -1) {
+            try {
+                sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        int chosenField = userChosenField;
+        userChosenField = -1;
+        return chosenField;
+    }
     public int choose_field() {
         int field_number = -1;
         Scanner scanner = new Scanner(in);
@@ -29,5 +45,10 @@ public class Player {
             }
         }
         return field_number - 1;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        this.userChosenField = (int) propertyChangeEvent.getNewValue();
     }
 }
