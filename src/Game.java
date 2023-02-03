@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Game {
-    public Board board;
-    public Player player;
+    private Board board;
+    private Player player;
     private final AI ai;
 
     public Game(int difficulty) {
