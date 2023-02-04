@@ -20,10 +20,13 @@ public class Player  implements PropertyChangeListener {
                 throw new RuntimeException(e);
             }
         }
-        int chosenField = userChosenField;
-        userChosenField = -1;
-        return chosenField;
+        return userChosenField;
     }
+
+    public void  ressetChosenField() {
+        userChosenField = -1;
+    }
+
     public int choose_field() {
         int field_number = -1;
         Scanner scanner = new Scanner(in);
