@@ -1,11 +1,10 @@
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
 import java.util.HashMap;
 //import java.util.Scanner;
 
 //import static java.lang.System.in;
-import static java.lang.System.out;
+
 
 public class GameKeeper implements PropertyChangeListener {
     int difficulty;
@@ -29,6 +28,7 @@ public class GameKeeper implements PropertyChangeListener {
             Difficulty difficultyChooser = new Difficulty();
             difficultyChooser.addPropertyChangeListener(this);
             difficultyChooser.pack();
+            difficultyChooser.setLocationRelativeTo(null);
             difficultyChooser.setVisible(true);
             while (difficulty == 0) {
                 try {
@@ -78,11 +78,13 @@ public class GameKeeper implements PropertyChangeListener {
             scoreMap.put("remis", remis);
             ScoreDialog scoreDialog = new ScoreDialog(scoreMap);
             scoreDialog.pack();
+            scoreDialog.setLocationRelativeTo(null);
             scoreDialog.setVisible(true);
             //out.println(score_message);
             NewGame newGameSelector = new NewGame();
             newGameSelector.addPropertyChangeListener(this);
             newGameSelector.pack();
+            newGameSelector.setLocationRelativeTo(null);
             newGameSelector.setVisible(true);
             while (!playDecision) {
                 try {
@@ -128,8 +130,9 @@ public class GameKeeper implements PropertyChangeListener {
         }
     }
     private void showGameOverMessage(String message) {
-        GameOver gameOver = new GameOver(message);
+        Message gameOver = new Message(message);
         gameOver.pack();
+        gameOver.setLocationRelativeTo(null);
         gameOver.setVisible(true);
     }
 }

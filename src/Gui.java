@@ -27,8 +27,8 @@ public class Gui extends JFrame{
         setLocationRelativeTo(parent);
         buttons = new JButton[]{button0, button1, button2, button3, button4, button5, button6, button7, button8};
         for (JButton button : buttons) {
-            button.setFont(new Font("Arial", Font.PLAIN, 50));
-            button.setText("");
+            button.setFont(new Font("Arial", Font.PLAIN, 40));
+            button.setText("  ");
         }
         this.setVisible(true);
         button0.addActionListener(actionEvent -> saveChoice(0));
@@ -51,6 +51,7 @@ public class Gui extends JFrame{
     public void setAISign(int field_number){
         if ((field_number >= 0) && (field_number < buttons.length)) {
             buttons[field_number].setText("O");
+
         }
     }
     public  void addPropertyChangeListener(PropertyChangeListener listener) {

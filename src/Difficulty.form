@@ -60,15 +60,13 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="349b8" class="javax.swing.JTextArea" binding="pleaseChooseADifficutlyTextArea" default-binding="true">
+          <component id="72dcd" class="javax.swing.JTextPane" binding="pleaseChooseADifficutlyTextArea">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties>
-              <text value="Please choose a difficutly level:"/>
-            </properties>
+            <properties/>
           </component>
         </children>
       </grid>

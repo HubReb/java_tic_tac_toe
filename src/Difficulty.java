@@ -8,7 +8,7 @@ public class Difficulty extends JDialog {
     private JPanel contentPane;
     private JButton buttonEasy;
     private JButton buttonChallenge;
-    private JTextArea pleaseChooseADifficutlyTextArea;
+    private JTextPane pleaseChooseADifficutlyTextArea;
     private JButton buttonHard;
 
     private int difficultyLevel;
@@ -21,7 +21,9 @@ public class Difficulty extends JDialog {
         getRootPane().setDefaultButton(buttonEasy);
         support = new PropertyChangeSupport(this);
         buttonEasy.addActionListener(e -> onEasy());
-
+        pleaseChooseADifficutlyTextArea.setFont(new Font("Calibri", Font.PLAIN, 15));
+        pleaseChooseADifficutlyTextArea.setText("Please choose a difficulty level:");
+        pleaseChooseADifficutlyTextArea.setEditable(false);
         buttonChallenge.addActionListener(e -> onMedium());
 
         buttonHard .addActionListener(e -> onHard());

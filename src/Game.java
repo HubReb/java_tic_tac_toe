@@ -82,22 +82,26 @@ public class Game {
 
     public int game_loop() {
         while (true) {
-            print_board();
+            //print_board();
 
             //int player_choice = player.choose_field();
             int player_choice = player.choose_field_gui();
             switch (board.get_field(player_choice)) {
                 case Player.SIGN -> {
-                    GameOver message = new GameOver("You have already taken this field!");
+                    Message message = new Message("You have already taken this field!");
                     message.pack();
+                    message.setLocationRelativeTo(null);
                     message.setVisible(true);
                     //System.err.println("You have already taken this field!");
+                    player.ressetChosenField();
                     continue;
                 }
                 case AI.SIGN -> {
-                    GameOver message = new GameOver("Your opponent has already taken this field!");
+                    Message message = new Message("Your opponent has already taken this field!");
                     message.pack();
+                    message.setLocationRelativeTo(null);
                     message.setVisible(true);
+                    player.ressetChosenField();
                     continue;
                 }
                 default -> {
@@ -115,6 +119,7 @@ public class Game {
                 return REMIS;
             }
             int marked_field = ai.ai_move(board);
+            System.out.println(marked_field);
             graphicalInterface.setAISign(marked_field);
             if (determine_remis()) {
               //  System.out.println("Remis!");
@@ -125,11 +130,12 @@ public class Game {
                // print_board();
                 return determine_final_state(winner);
             }
+            player.ressetChosenField();
         }
     }
 
     private int determine_final_state(int winner_after_player_move) {
-        print_board();
+        //print_board();
         if (winner_after_player_move == Player.SIGN) {
             //System.out.println("You have won!");
             return Player.SIGN;
