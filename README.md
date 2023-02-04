@@ -9,6 +9,4 @@ Current features:
 * score keeper
 * GUI
 
-FIXMEs:
-* fix editable information frames
-* fix button size
+
