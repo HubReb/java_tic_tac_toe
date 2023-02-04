@@ -98,7 +98,7 @@ public class AI {
     private int check_diagonals(Board board) {
         int[][] diagonal_indices = {{2,4,6},{0,4,8}};
         for (int[] diagonalIndex : diagonal_indices) {
-            int free_cell = 0;
+            int free_cell = -1;
             int diagonal_count = 0;
             for (int j : diagonalIndex) {
                 if (board.get_field(j) == 0) {
@@ -116,7 +116,7 @@ public class AI {
     private int check_two(Board board, boolean column) {
         for (int i = 0; i < Board.WIDTH; i++) {
             int count = 0;
-            int free_cell_index = 0;
+            int free_cell_index = -1;
             for (int j=0; j < Board.LENGTH; j++) {
                 int index = column ? i + 3 * j : j + 3 * i;
                 if (board.get_field(index) == 0) {
