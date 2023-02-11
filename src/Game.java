@@ -4,7 +4,7 @@ public class Game {
     private final Board board;
     private final Player player;
     private final AI ai;
-    private final int REMIS = 3;
+    private final Field REMIS = Field.REMIS;
     private  final Gui graphicalInterface;
     public Game(int difficulty) {
         board = new Board();
@@ -25,14 +25,14 @@ public class Game {
         int i = 0;
         while (i < Board.LENGTH) {
             for (int j = 0; j < Board.WIDTH; j++)
-                if (board.get_field(i * Board.LENGTH + j) == 0) {
+                if (board.get_field(i * Board.LENGTH + j) == Field.FREE) {
                     return false;
                 }
             i++;
         }
         return true;
     }
-    private int determine_winner(int chosen_field) {
+    private Field determine_winner(int chosen_field) {
         int[] row_start = {0, 3, 6};
         for (int i : row_start) {
             if (chosen_field >= i && chosen_field <= (i+3)) {
@@ -57,15 +57,15 @@ public class Game {
         if (check_three(2, 2)) {
             return board.get_field(2);
         }
-        return -1;
+        return Field.FREE;
     }
     public void print_board() {
         System.out.println("-------------");
         System.out.print("| ");
         for (int i = 0; i < 9; i++) {
             switch (board.get_field(i)) {
-                case 0 -> System.out.print("  | ");
-                case Player.SIGN -> System.out.print("X | ");
+                case FREE -> System.out.print("  | ");
+                case CROSS -> System.out.print("X | ");
                 default -> System.out.print("O | ");
             }
             if ((i > 0) && ((i + 1) % 3 == 0)) {
@@ -80,14 +80,14 @@ public class Game {
         System.out.println("-------------");
     }
 
-    public int game_loop() {
+    public Field game_loop() {
         while (true) {
             //print_board();
 
             //int player_choice = player.choose_field();
             int player_choice = player.choose_field_gui();
             switch (board.get_field(player_choice)) {
-                case Player.SIGN -> {
+                case CROSS-> {
                     Message message = new Message("You have already taken this field!");
                     message.pack();
                     message.setLocationRelativeTo(null);
@@ -96,7 +96,7 @@ public class Game {
                     player.ressetChosenField();
                     continue;
                 }
-                case AI.SIGN -> {
+                case CIRCLE -> {
                     Message message = new Message("Your opponent has already taken this field!");
                     message.pack();
                     message.setLocationRelativeTo(null);
@@ -105,11 +105,11 @@ public class Game {
                     continue;
                 }
                 default -> {
-                    board.set_field(player_choice, Player.SIGN);
+                    board.set_field(player_choice, Field.CROSS);
                     //System.out.println(player_choice);
                     graphicalInterface.setPlayerSign(player_choice);
-                    int winner_after_player_move = determine_winner(player_choice);
-                    if (winner_after_player_move > 0) {
+                    Field winner_after_player_move = determine_winner(player_choice);
+                    if (winner_after_player_move != Field.FREE) {
                         return determine_final_state(winner_after_player_move);
                     }
                 }
@@ -125,8 +125,8 @@ public class Game {
               //  System.out.println("Remis!");
                 return REMIS;
             }
-            int winner = determine_winner(marked_field);
-            if (winner > 0) {
+            Field winner = determine_winner(marked_field);
+            if (winner != Field.FREE) {
                // print_board();
                 return determine_final_state(winner);
             }
@@ -134,7 +134,7 @@ public class Game {
         }
     }
 
-    private int determine_final_state(int winner_after_player_move) {
+    private Field determine_final_state(Field winner_after_player_move) {
         //print_board();
         if (winner_after_player_move == Player.SIGN) {
             //System.out.println("You have won!");

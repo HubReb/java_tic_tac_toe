@@ -6,7 +6,7 @@ import static java.lang.System.*;
 import static java.lang.Thread.sleep;
 
 public class Player  implements PropertyChangeListener {
-    public static final int SIGN = 1;
+    public static final Field SIGN = Field.CROSS;
     private int userChosenField = -1;
     public Player() {
 
