@@ -132,7 +132,7 @@ public class GameKeeper implements PropertyChangeListener {
     private void showGameOverMessage(String message) {
         Message gameOver = new Message(message);
         gameOver.pack();
-        gameOver.setLocationRelativeTo(null);
         gameOver.setVisible(true);
+        gameOver.setLocationRelativeTo(null);
     }
 }

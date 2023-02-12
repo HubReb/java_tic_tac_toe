@@ -115,7 +115,6 @@ public class Game {
                 }
             }
             if (determine_remis()) {
-                //System.out.println("Remis!");
                 return REMIS;
             }
             int marked_field = ai.ai_move(board);
