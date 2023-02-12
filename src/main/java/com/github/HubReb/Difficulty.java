@@ -33,6 +33,7 @@ public class Difficulty extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                onEasy();
                 onCancel();
             }
         });

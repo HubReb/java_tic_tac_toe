@@ -44,6 +44,7 @@ public class Gui extends JFrame {
         button5.addActionListener(actionEvent -> saveChoice(5));
         button4.addActionListener(actionEvent -> saveChoice(4));
         support = new PropertyChangeSupport(this);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
 
