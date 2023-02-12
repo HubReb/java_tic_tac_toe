@@ -1,3 +1,5 @@
+package com.github.HubReb;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,3 +1,4 @@
+package com.github.HubReb;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {

@@ -1,35 +1,37 @@
+package com.github.HubReb;
+
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Difficulty extends JDialog {
+public class NewGame extends JDialog {
     private JPanel contentPane;
-    private JButton buttonEasy;
-    private JButton buttonChallenge;
-    private JTextPane pleaseChooseADifficutlyTextArea;
-    private JButton buttonHard;
+    private JButton buttonYes;
+    private JButton buttonNo;
+    private JTextPane textPane1;
 
-    private int difficultyLevel;
+
+    private boolean newGame;
     private PropertyChangeSupport support;
 
-    public Difficulty() {
+    public NewGame() {
         setContentPane(contentPane);
+        textPane1.setText("Do you want to start a new game?");
+        textPane1.setFont(new Font("Calibri", Font.PLAIN, 15));
+        textPane1.setEditable(false);
         setModal(true);
+        getRootPane().setDefaultButton(buttonYes);
         setMinimumSize(new Dimension(500, 200));
-        getRootPane().setDefaultButton(buttonEasy);
         support = new PropertyChangeSupport(this);
-        buttonEasy.addActionListener(e -> onEasy());
-        pleaseChooseADifficutlyTextArea.setFont(new Font("Calibri", Font.PLAIN, 15));
-        pleaseChooseADifficutlyTextArea.setText("Please choose a difficulty level:");
-        pleaseChooseADifficutlyTextArea.setEditable(false);
-        buttonChallenge.addActionListener(e -> onMedium());
+        buttonYes.addActionListener(e -> onOK());
 
-        buttonHard.addActionListener(e -> onHard());
+        buttonNo.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
@@ -40,30 +42,25 @@ public class Difficulty extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onEasy() {
+    private void onOK() {
         // add your code here
-        support.firePropertyChange("difficultyLevel", difficultyLevel, 1);
-        difficultyLevel = 1;
-        dispose();
-    }
-
-    private void onMedium() {
-        // add your code here
-        support.firePropertyChange("difficultyLevel", difficultyLevel, 2);
-        difficultyLevel = 2;
-        dispose();
-    }
-
-    private void onHard() {
-        // add your code here
-        support.firePropertyChange("difficultyLevel", difficultyLevel, 3);
-        difficultyLevel = 3;
+        support.firePropertyChange("newGame", newGame, true);
+        newGame = true;
         dispose();
     }
 
     private void onCancel() {
         // add your code here if necessary
+        support.firePropertyChange("newGame", true, false);     // TODO: find better method than ugly hack: need to pretend old value was new for firePropertyChange to fire
+        newGame = false;
         dispose();
+    }
+
+    public static void main(String[] args) {
+        NewGame dialog = new NewGame();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -90,23 +87,23 @@ public class Difficulty extends JDialog {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1, true, false));
         panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        buttonChallenge = new JButton();
-        buttonChallenge.setText("Challenge");
-        panel2.add(buttonChallenge, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonHard = new JButton();
-        buttonHard.setText("Hard");
-        panel2.add(buttonHard, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonEasy = new JButton();
-        buttonEasy.setText("Easy");
-        panel1.add(buttonEasy, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonYes = new JButton();
+        buttonYes.setText("Yes");
+        panel2.add(buttonYes, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonNo = new JButton();
+        buttonNo.setText("No");
+        panel2.add(buttonNo, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        pleaseChooseADifficutlyTextArea = new JTextPane();
-        panel3.add(pleaseChooseADifficutlyTextArea, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel3.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        textPane1 = new JTextPane();
+        panel3.add(textPane1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
     }
 
     /**
