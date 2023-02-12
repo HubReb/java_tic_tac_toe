@@ -1,3 +1,5 @@
+package com.github.HubReb;
+
 import java.util.Arrays;
 
 public class Game {
