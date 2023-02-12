@@ -57,13 +57,13 @@ public class GameKeeper implements PropertyChangeListener {
             }*/
             //readable_int = false;
             Game tic_tac_toe = new Game(difficulty);
-            int game_result = tic_tac_toe.game_loop();
+            Field game_result = tic_tac_toe.game_loop();
             switch (game_result) {
-                case Player.SIGN -> {
+                case CROSS-> {
                     victories++;
                     showGameOverMessage("You have won!");
                 }
-                case AI.SIGN -> {
+                case CIRCLE -> {
                     losses++;
                     showGameOverMessage("You have lost!");
                 }

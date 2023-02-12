@@ -1,7 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {
-    public static final int SIGN = 2;
+    public static final Field SIGN = Field.CIRCLE;
     int difficulty;
     public AI(int chosen_difficulty) {
         difficulty = chosen_difficulty;
@@ -9,7 +9,7 @@ public class AI {
 
     private int random_move(Board board) {
         int random_field = ThreadLocalRandom.current().nextInt(9);
-        if (board.get_field(random_field) == 0) {
+        if (board.get_field(random_field) == Field.FREE) {
             board.set_field(random_field, SIGN);
             return random_field;
         }
@@ -23,7 +23,7 @@ public class AI {
             }
             return chosen_field;
         }
-        if (board.get_field(4) == 0) {
+        if (board.get_field(4) == Field.FREE) {
             board.set_field(4, SIGN);
             return 4;
         }
@@ -46,7 +46,7 @@ public class AI {
             }
             int empty_spot = -1;
             for (int i = 0; i < 9; i++){
-                int current_field = board.get_field(i);
+                Field current_field = board.get_field(i);
                 if (current_field == SIGN) {
                     int next_field_to_take = get_available_adjacent(board, i);
                     if (next_field_to_take > -1) {
@@ -54,7 +54,7 @@ public class AI {
                         return next_field_to_take;
                     }
                 }
-                else if (board.get_field(i) == 0) {
+                else if (board.get_field(i) == Field.FREE) {
                     empty_spot = i;
 
                 }
@@ -70,27 +70,27 @@ public class AI {
             int next_field = 0;
             do {
                 next_field = ThreadLocalRandom.current().nextInt(4);
-            }while (board.get_field(next_fields[next_field]) != 0);
+            }while (board.get_field(next_fields[next_field]) != Field.FREE);
             return next_fields[next_field];
         }
         else {
-            if (field + 3 < 9 && board.get_field(field + 3) == 0) {
+            if (field + 3 < 9 && board.get_field(field + 3) == Field.FREE) {
                 return field + 3;
             }
-            if ((field - 2) > 0 && board.get_field(field - 3) == 0) {
+            if ((field - 2) > 0 && board.get_field(field - 3) == Field.FREE) {
                 return field - 3;
             }
             if (((field + 1) / 3) == (field / 3) && (field + 1 < 9)) {
-                if (board.get_field(field + 1) == 0) {
+                if (board.get_field(field + 1) == Field.FREE) {
                     return field + 1;
                 }
             }
-            if (((field - 1) / 3) == (field / 3) && board.get_field(field - 1) == 0) {
+            if (((field - 1) / 3) == (field / 3) && board.get_field(field - 1) == Field.FREE) {
                 return field - 1;
             }
         }
         for (int i = 0; i < 9; i++)
-            if (board.get_field(i) == 0) {
+            if (board.get_field(i) == Field.FREE) {
                 return i;
             }
         return -1;
@@ -101,7 +101,7 @@ public class AI {
             int free_cell = -1;
             int diagonal_count = 0;
             for (int j : diagonalIndex) {
-                if (board.get_field(j) == 0) {
+                if (board.get_field(j) == Field.FREE) {
                     free_cell = j;
                 } else {
                     diagonal_count++;
@@ -119,7 +119,7 @@ public class AI {
             int free_cell_index = -1;
             for (int j=0; j < Board.LENGTH; j++) {
                 int index = column ? i + 3 * j : j + 3 * i;
-                if (board.get_field(index) == 0) {
+                if (board.get_field(index) == Field.FREE) {
                     free_cell_index = index;
                 } else if (board.get_field(index) == Player.SIGN){
                     count++;
