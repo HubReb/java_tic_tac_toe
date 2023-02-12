@@ -1,6 +1,6 @@
 # java_tic_tac_toe
 
-Implementation of TicTacToe in Java to get back up to speed.
+Implementation of TicTacToe in Java to get back up to speed and the implementation reflects that goal.
 
 ![TicTacToe](shots/game.png "TicTacToe")
 
