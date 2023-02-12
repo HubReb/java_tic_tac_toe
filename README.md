@@ -5,9 +5,12 @@ Implementation of TicTacToe in Java to get back up to speed.
 ![TicTacToe](shots/game.png "TicTacToe")
 
 ## Current features
-* Graphical User Interface
-* different difficulties: ![difficulties](shots/difficulty_chooser.png "Difficulty")
-* score keeper: ![scores](shots/score_keeper.png "Scores")
+
+## Different Difficulties 
+![difficulties](shots/difficulty_chooser.png "Difficulty")
+
+## Score Keeper:
+![scores](shots/score_keeper.png "Scores")
 
 
 
